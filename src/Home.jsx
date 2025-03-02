@@ -1,19 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 
-const Home = ({ addToCart }) => { 
-  const [products, setProducts] = useState([]);
+const Home = ({ addToCart, search, sort, products }) => { // ✅ Receive `products` from App.js
 
-  useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((res) => res.json())
-      .then(setProducts)
-      .catch((err) => console.error("Error fetching products:", err));
-  }, []);
+  // ✅ Apply Search Filter Safely
+  const filteredProducts = products.filter(
+    (product) => product.title && product.title.toLowerCase().includes(search)
+  );
+
+  // ✅ Apply Sorting
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    if (sort === "lowhigh") return a.price - b.price;
+    if (sort === "highlow") return b.price - a.price;
+    if (sort === "alphabetical") return a.title.localeCompare(b.title);
+    return 0;
+  });
 
   return (
     <div className="container mt-5 pt-5">
       <div className="row row-cols-1 row-cols-md-3 g-4 text-center">
-        {products.map((product) => (
+        {sortedProducts.map((product) => (
           <div key={product.id} className="col">
             <div className="card h-100 shadow-sm border-gray">
               <div className="image-container d-flex justify-content-center align-items-center p-3">
@@ -25,17 +31,24 @@ const Home = ({ addToCart }) => {
                 />
               </div>
               <div className="card-body">
-                <h5 className="card-title text-truncate">{product.title.slice(0, 12)}</h5>
-                <p className="card-text fw-bold">Price: ${product.price.toFixed(2)}</p>
-                <button
-                  onClick={() => {
-                    addToCart(product); 
-                    alert("Product added successfully!");
-                  }}
-                  className="btn btn-primary w-100 mt-2"
-                >
-                  Add to Cart
-                </button>
+                <h5 className="card-title text-truncate">
+                  {product.title.slice(0, 12)}
+                </h5>
+                <p className="card-text fw-bold">
+                  Price: ${product.price.toFixed(2)}
+                </p>
+                {/* ✅ Buttons Styled to be Same Size & Color */}
+                <div className="d-flex gap-2">
+                  <button
+                    onClick={() => addToCart(product)}
+                    className="btn btn-primary w-100"
+                  >
+                    Add to Cart
+                  </button>
+                  <Link to={`/details/${product.id}`} className="btn btn-primary w-100">
+                    Details
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

@@ -1,79 +1,54 @@
-import React, { useState } from 'react'; 
-import './App.css'; 
-function App() { 
-const [students, setStudents] = useState([]); 
-const [name, setName] = useState(''); 
-const [grade, setGrade] = useState(''); 
-const [editIndex, setEditIndex] = useState(null); 
+import React, { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import Home from "./Home";
+import LoginForm from "./LoginForm";
+import SignUp from "./SignUp";
+import Cart from "./Cart";
+import Details from "./Details"; // ✅ Import Details Page
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
-const handleAddOrUpdateStudent = (e) => { 
-e.preventDefault(); 
-  if(editIndex !== null){
-    const updateStudents = [...students];
-    updateStudents[editIndex] = {name,grade};
-    setStudents(updateStudents);
-    setEditIndex(null);
+function App() {
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState("");
+  const [cart, setCart] = useState([]);
+  const [products, setProducts] = useState([]); // ✅ Global product state
 
-  }else{
-    setStudents([...students,{name,grade}]);
+  // ✅ Fetch products globally
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((res) => res.json())
+      .then(setProducts)
+      .catch((err) => console.error("Error fetching products:", err));
+  }, []);
 
-  }
-  setName("");
-  setGrade("")
-}; 
-const handleEdit = (index) => { 
+  const addToCart = (product) => {
+    setCart((prevCart) => {
+      const existingProduct = prevCart.find((item) => item.id === product.id);
+      if (existingProduct) {
+        return prevCart.map((item) =>
+          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      } else {
+        return [...prevCart, { ...product, quantity: 1 }];
+      }
+    });
+    alert("Product added successfully!");
+  };
 
-    setName(students[index].name) ;
-    setGrade(students[index].grade);
-    setEditIndex(index);
-
-    }
-
-const handleDelete = (index) => { 
-     setStudents(students.filter((_, i)=> i !== index));
-}; 
-
-return ( 
-<div className="App"> 
-<h1>Student Grades Management</h1> 
-<form onSubmit={handleAddOrUpdateStudent}> 
-<input 
-          type="text" 
-          placeholder="Student Name" 
-          value={name} 
-          onChange={(e) => setName(e.target.value)} 
-        /> 
-<input 
-          type="text" 
-          placeholder="Grade" 
-          value={grade} 
-          onChange={(e) => setGrade(e.target.value)} 
-        /> 
-<button type="submit">{editIndex !== null ? 'Update' : 'Add'} Student</button> 
-</form> 
-<table> 
-<thead> 
-<tr> 
-<th>Name</th> 
-<th>Grade</th> 
-<th>Actions</th> 
-</tr> 
-</thead> 
-<tbody> 
-          {students.map((student, index) => ( 
-<tr key={index}> 
-<td>{student.name}</td> 
-<td>{student.grade}</td> 
-<td> 
-<button onClick={() => handleEdit(index)}>Edit</button> 
-<button onClick={() => handleDelete(index)}>Delete</button> 
-</td> 
-</tr> 
-          ))} 
-</tbody> 
-</table> 
-</div> 
-  ); 
+  return (
+    <>
+      <Navbar setSearch={setSearch} setSort={setSort} cartCount={cart.length} />
+      <Routes>
+        <Route path="/" element={<Home search={search} sort={sort} addToCart={addToCart} products={products} />} />
+        <Route path="/details/:id" element={<Details products={products} />} /> {/* ✅ Fix: Added Route */}
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />
+      </Routes>
+      <Footer />
+    </>
+  );
 }
 
 export default App;

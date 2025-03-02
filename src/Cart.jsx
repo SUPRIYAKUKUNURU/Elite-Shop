@@ -1,35 +1,71 @@
 import React from "react";
 
-function Cart({ cart }) { 
+const Cart = ({ cart, setCart }) => {
+  // Function to increase quantity
+  const increaseQuantity = (id) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+      )
+    );
+  };
+
+  // Function to decrease quantity
+  const decreaseQuantity = (id) => {
+    setCart((prevCart) =>
+      prevCart.map((item) =>
+        item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+      ).filter((item) => item.quantity > 0) // 🔥 Removes item if quantity is 0
+    );
+  };
+
+  // Calculate grand total
+  const grandTotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
   return (
     <div className="container mt-5 pt-5">
-      <h2>Shopping Cart</h2>
+      <h2 className="text-center mb-4">Shopping Cart</h2>
+
       {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <h4 className="text-center">Your cart is empty</h4>
       ) : (
-        <div className="row row-cols-1 row-cols-md-3 g-4">
-          {cart.map((product, index) => (
-            <div key={index} className="col">
-              <div className="card h-100 shadow-sm border-gray">
-                <div className="image-container d-flex justify-content-center align-items-center p-3">
-                  <img
-                    src={product.image}
-                    className="card-img-top img-fluid"
-                    alt={product.title}
-                    style={{ maxHeight: "150px", objectFit: "contain" }}
-                  />
-                </div>
-                <div className="card-body">
-                  <h5 className="card-title text-truncate">{product.title.slice(0, 12)}</h5>
-                  <p className="card-text fw-bold">Price: ${product.price.toFixed(2)}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <>
+          <table className="table table-bordered text-center">
+            <thead className="table-primary">
+              <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((item) => (
+                <tr key={item.id}>
+                  <td>
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      style={{ width: "50px", height: "50px" }}
+                    />
+                  </td>
+                  <td>{item.title.slice(0, 15)}...</td>
+                  <td>
+                    <button className="btn btn-danger me-2" onClick={() => decreaseQuantity(item.id)}>-</button>
+                    {item.quantity}
+                    <button className="btn btn-success ms-2" onClick={() => increaseQuantity(item.id)}>+</button>
+                  </td>
+                  <td>${(item.price * item.quantity).toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <h3 className="text-end">Grand Total: <span className="text-primary">${grandTotal.toFixed(2)}</span></h3>
+        </>
       )}
     </div>
   );
-}
+};
 
 export default Cart;
