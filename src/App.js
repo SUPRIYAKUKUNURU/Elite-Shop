@@ -4,7 +4,7 @@ import Home from "./Home";
 import LoginForm from "./LoginForm";
 import SignUp from "./SignUp";
 import Cart from "./Cart";
-import Details from "./Details"; // ✅ Import Details Page
+import Details from "./Details"; 
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
@@ -12,9 +12,9 @@ function App() {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("");
   const [cart, setCart] = useState([]);
-  const [products, setProducts] = useState([]); // ✅ Global product state
+  const [products, setProducts] = useState([]);
 
-  // ✅ Fetch products globally
+  
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
