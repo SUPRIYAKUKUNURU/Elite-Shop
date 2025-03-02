@@ -31,7 +31,7 @@ function Navbar({ setSearch, setSort, cartCount }) {
               type="search"
               className="form-control"
               placeholder="Search"
-              onChange={(e) => setSearch(e.target.value.toLowerCase())} // ✅ Pass to parent
+              onChange={(e) => setSearch(e.target.value.toLowerCase())} 
             />
             <select className="form-select" onChange={(e) => setSort(e.target.value)}>
               <option value="">Sort By</option>

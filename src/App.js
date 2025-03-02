@@ -41,7 +41,7 @@ function App() {
       <Navbar setSearch={setSearch} setSort={setSort} cartCount={cart.length} />
       <Routes>
         <Route path="/" element={<Home search={search} sort={sort} addToCart={addToCart} products={products} />} />
-        <Route path="/details/:id" element={<Details products={products} />} /> 
+        <Route path="/details/:id" element={<Details products={products} />} /> {/* ✅ Fix: Added Route */}
         <Route path="/login" element={<LoginForm />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/cart" element={<Cart cart={cart} setCart={setCart} />} />

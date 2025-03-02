@@ -2,8 +2,8 @@ import React from "react";
 import { useParams } from "react-router-dom";
 
 const Details = ({ products }) => {
-  const { id } = useParams(); // ✅ Get product ID from URL
-  const product = products.find((item) => item.id === Number(id)); // ✅ Convert ID to number for correct comparison
+  const { id } = useParams(); 
+  const product = products.find((item) => item.id === Number(id)); 
 
   if (!product) {
     return <h2 className="text-center mt-5">Product Not Found</h2>;

@@ -1,7 +1,7 @@
 import React from "react";
 
 const Cart = ({ cart, setCart }) => {
-  // Function to increase quantity
+  
   const increaseQuantity = (id) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
@@ -10,16 +10,15 @@ const Cart = ({ cart, setCart }) => {
     );
   };
 
-  // Function to decrease quantity
+ 
   const decreaseQuantity = (id) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
         item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-      ).filter((item) => item.quantity > 0) // 🔥 Removes item if quantity is 0
+      ).filter((item) => item.quantity > 0) 
     );
   };
 
-  // Calculate grand total
   const grandTotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
