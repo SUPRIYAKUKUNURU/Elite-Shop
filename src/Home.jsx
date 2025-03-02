@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Home = ({ addToCart, search, sort, products }) => { // ✅ Receive `products` from App.js
+const Home = ({ addToCart, search, sort, products }) => 
 
-  // ✅ Apply Search Filter Safely
+
   const filteredProducts = products.filter(
     (product) => product.title && product.title.toLowerCase().includes(search)
   );
 
-  // ✅ Apply Sorting
+  
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     if (sort === "lowhigh") return a.price - b.price;
     if (sort === "highlow") return b.price - a.price;
@@ -37,7 +37,7 @@ const Home = ({ addToCart, search, sort, products }) => { // ✅ Receive `produc
                 <p className="card-text fw-bold">
                   Price: ${product.price.toFixed(2)}
                 </p>
-                {/* ✅ Buttons Styled to be Same Size & Color */}
+                
                 <div className="d-flex gap-2">
                   <button
                     onClick={() => addToCart(product)}
