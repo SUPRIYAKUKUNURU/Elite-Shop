@@ -31,7 +31,7 @@ function Footer() {
           <h5>Online Shop</h5>
           <li>Watch</li>
           <li>Bag</li>
-          <li>Shoes</li>
+          <li>Jewellery</li>
           <li>Dress</li>
         </ul>
       </div>
