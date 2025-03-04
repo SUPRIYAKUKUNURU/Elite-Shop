@@ -31,7 +31,7 @@ const Home = ({ addToCart, search, sort, products }) => {
                 <h5 className="card-title text-truncate">
                   {product.title.slice(0, 12)}
                 </h5>
-                <p className="card-text fw-bold">
+                <p className="card-text fw-bold"  style={{color:"green"}}>
                   Price: ${product.price.toFixed(2)}
                 </p>
 
