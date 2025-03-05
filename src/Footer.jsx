@@ -29,7 +29,7 @@ function Footer() {
       <div>
         <ul className="list-unstyled">
           <h5>Online Shop</h5>
-          <li>Watch</li>
+          <li>Sweaters</li>
           <li>Bag</li>
           <li>Jewellery</li>
           <li>Dress</li>
