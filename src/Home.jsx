@@ -44,7 +44,7 @@ const Home = ({ addToCart, search, sort, products }) => {
                   </button>
                   <Link
                     to={`/details/${product.id}`}
-                    className="btn btn-primary w-100"
+                    className="btn btn-primary w-50"
                   >
                     Details
                   </Link>
