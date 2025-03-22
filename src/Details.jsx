@@ -19,6 +19,7 @@ const Details = ({ products }) => {
           style={{ width: "200px", height: "200px", objectFit: "contain" }}
         />
         <div className="card-body text-center">
+          <h3>{product.id}</h3>
           <h3 className="card-title">{product.title}</h3>
           <p className="card-text text-muted">{product.description}</p>
           <h4 className="text-success">${product.price.toFixed(2)}</h4>
