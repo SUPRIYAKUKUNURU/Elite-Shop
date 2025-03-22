@@ -37,7 +37,7 @@ function Navbar({ setSearch, setSort, cartCount }) {
               <option value="">Sort By</option>
               <option value="lowhigh">Low to High</option>
               <option value="highlow">High to Low</option>
-              <option value="alphabetical">Alphabetical</option>
+              <option value="alphabetical">Alphabetical Order</option>
             </select>
           </div>
         </div>
