@@ -38,7 +38,7 @@ const Home = ({ addToCart, search, sort, products }) => {
                 <div className="d-flex gap-2">
                   <button
                     onClick={() => addToCart(product)}
-                    className="btn btn-primary w-100"
+                    className="btn btn-primary w-50"
                   >
                     Add to Cart
                   </button>
